@@ -1,10 +1,12 @@
-﻿import {createContext, useState} from "react";
+﻿import {createContext, useReducer, useState} from "react";
 import {DUMMY_PRODUCTS} from "../dummy-products.js";
 
 export const CartContext = createContext({
     items: [],
-    addItemToCart: () => {},
-    updateCartItemQuantity: () => {}
+    addItemToCart: () => {
+    },
+    updateCartItemQuantity: () => {
+    }
 });
 
 // Note:
@@ -12,7 +14,20 @@ export const CartContext = createContext({
 // if a component that was not wrapped by the provider component
 // tries to access the context value
 
-export default function CartContextProvider({ children }) {
+function ShoppingCartReducer(state, action) {
+    return state;
+}
+
+export default function CartContextProvider({children}) {
+
+    // (ShoppingCartReducer) will be called whenever (shoppingCartDispatch) is executed
+    const [shoppingCartState, shoppingCartDispatch] = useReducer(
+        ShoppingCartReducer,
+        {
+            items: [],
+        }
+    );
+
     const [shoppingCart, setShoppingCart] = useState({
         items: [],
     });
@@ -74,12 +89,12 @@ export default function CartContextProvider({ children }) {
     }
 
     const ctxValue = {
-        items: shoppingCart.items,
+        items: shoppingCartState.items,
         addItemToCart: handleAddItemToCart,
         updateCartItemQuantity: handleUpdateCartItemQuantity
     }
-    
+
     return <CartContext.Provider value={ctxValue}>
-        { children }
+        {children}
     </CartContext.Provider>
 }
