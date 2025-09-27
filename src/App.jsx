@@ -67,9 +67,13 @@ function App() {
         });
     }
 
-    // In React 19 only you can use it as <CartContext> without accessing (.Provider)
+    const ctxValue = {
+        items: shoppingCart.items,
+        addItemToCart: handleAddItemToCart,
+    }
+
     return (
-        <CartContext.Provider value={shoppingCart}>
+        <CartContext.Provider value={ctxValue}>
             <Header
                 cart={shoppingCart}
                 onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
@@ -77,7 +81,7 @@ function App() {
             <Shop>
                 {DUMMY_PRODUCTS.map((product) => (
                     <li key={product.id}>
-                        <Product {...product} onAddToCart={handleAddItemToCart} />
+                        <Product {...product} />
                     </li>
                 ))}
             </Shop>
