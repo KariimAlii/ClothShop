@@ -69,7 +69,7 @@ function App() {
 
     // In React 19 only you can use it as <CartContext> without accessing (.Provider)
     return (
-        <CartContext.Provider value={{ items: [] }}>
+        <CartContext.Provider value={shoppingCart}>
             <Header
                 cart={shoppingCart}
                 onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
